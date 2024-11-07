@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+authors = [
+    { name = "Federico Oberndorfer", email = "federico.ober@hotmail.com" },
+]
+name = "mydb"
+version = "0.1.0"
+
+dependencies = ["pyparsing>=3.1.4"]
+
+[project.optional-dependencies]
+dev = ["mypy>=1.4.1", "ruff", "pytest", "pytest-cov", "pytest-asyncio"]
+
+[tool.pytest.ini_options]
+addopts = """
+    --asyncio-mode=auto
+    --cov=mydb
+    --cov-report=term-missing
+"""
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+files = ["src"]
+strict = true
+plugins = ["sqlalchemy.ext.mypy.plugin", "pydantic.mypy"]
+
+[tool.ruff]
+extend-select = ["I", "C90", "PGH", "B"]
