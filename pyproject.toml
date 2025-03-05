@@ -8,27 +8,35 @@ authors = [
 ]
 name = "mydb"
 version = "0.1.0"
+requires-python = ">=3.13"
 
-dependencies = ["pyparsing>=3.1.4"]
+dependencies = [
+    "polars>=1.21.0",
+    "pyarrow>=19.0.0",
+    "pydantic>=2.10.6",
+    "pyparsing>=3.1.4",
+]
 
-[project.optional-dependencies]
-dev = ["mypy>=1.4.1", "ruff", "pytest", "pytest-cov", "pytest-asyncio"]
+[dependency-groups]
+dev = [
+    "hypothesis>=6.125.3",
+    "mypy>=1.14.1",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.9.4",
+]
 
 [tool.pytest.ini_options]
 addopts = """
-    --asyncio-mode=auto
     --cov=mydb
     --cov-report=term-missing
 """
 testpaths = ["tests"]
-
-[tool.black]
-line-length = 88
 
 [tool.mypy]
 files = ["src"]
 strict = true
 plugins = ["sqlalchemy.ext.mypy.plugin", "pydantic.mypy"]
 
-[tool.ruff]
+[tool.ruff.lint]
 extend-select = ["I", "C90", "PGH", "B"]
